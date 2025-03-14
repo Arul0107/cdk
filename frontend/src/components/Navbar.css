@@ -1,0 +1,240 @@
+/* Navbar.css */
+:root {
+  --primary-color: #f1ff9d;
+  --text-color: #ffffff;
+  --bg-color: rgba(69, 69, 77, 0.65);
+  --mobile-menu-bg: #1a1a1a;
+}
+
+/* Base Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg-color);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar.scrolled {
+  background: rgba(26, 26, 26, 0.95);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+}
+
+/* Logo */
+.navbar-logo-img {
+  width: 140px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover .navbar-logo-img {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+/* Desktop Menu */
+.navbar-menu-items {
+  display: flex;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar-link {
+  position: relative;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.hover-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.navbar-link:hover .hover-underline,
+.navbar-link.active .hover-underline {
+  width: 100%;
+}
+
+/* Mobile Menu */
+.navbar-mobile-menu-trigger {
+  display: none;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.navbar-burger-icon {
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background: var(--text-color);
+  transition: all 0.3s ease;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.navbar-burger-icon::before,
+.navbar-burger-icon::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.navbar-burger-icon::before {
+  transform: translateY(-8px);
+}
+
+.navbar-burger-icon::after {
+  transform: translateY(8px);
+}
+
+.navbar-mobile-menu-trigger.active .navbar-burger-icon {
+  background: transparent;
+}
+
+.navbar-mobile-menu-trigger.active .navbar-burger-icon::before {
+  transform: rotate(45deg);
+}
+
+.navbar-mobile-menu-trigger.active .navbar-burger-icon::after {
+  transform: rotate(-45deg);
+}
+
+/* Mobile Menu Content */
+.navbar-menu {
+  display: flex;
+}
+
+.navbar-menu.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--mobile-menu-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: menuSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes menuSlide {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+
+.navbar-menu.show .navbar-menu-items {
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+.navbar-menu.show .navbar-link {
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: menuItemFade 0.4s ease forwards;
+}
+
+@keyframes menuItemFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar-menu.show .navbar-link:nth-child(1) { animation-delay: 0.2s; }
+.navbar-menu.show .navbar-link:nth-child(2) { animation-delay: 0.3s; }
+.navbar-menu.show .navbar-link:nth-child(3) { animation-delay: 0.4s; }
+.navbar-menu.show .navbar-link:nth-child(4) { animation-delay: 0.5s; }
+.navbar-menu.show .navbar-link:nth-child(5) { animation-delay: 0.6s; }
+
+/* Contact Button */
+.navbar-theme-btn {
+  position: relative;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.hover-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-color);
+  transition: left 0.4s ease;
+  z-index: -1;
+}
+
+.navbar-theme-btn:hover {
+  color: #1a1a1a;
+}
+
+.navbar-theme-btn:hover .hover-effect {
+  left: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .navbar-menu {
+      display: none;
+  }
+  
+  .navbar-mobile-menu-trigger {
+      display: flex;
+  }
+  
+  .navbar-logo-img {
+      width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+      padding: 1rem;
+  }
+  
+  .navbar.scrolled {
+      padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo-img {
+      width: 100px;
+  }
+  
+  .navbar-menu.show .navbar-link {
+      font-size: 1.2rem;
+  }
+}
